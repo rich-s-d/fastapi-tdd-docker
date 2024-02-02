@@ -2,6 +2,7 @@
 
 
 import logging
+from functools import lru_cache
 
 from pydantic_settings import BaseSettings
 
@@ -14,6 +15,7 @@ class Settings(BaseSettings):
     testing: bool = bool(0)
 
 
-def get_settings() -> BaseSettings:
+@lru_cache()
+async def get_settings() -> BaseSettings:
     log.info("Loading config settings from the environment...")
     return Settings()
